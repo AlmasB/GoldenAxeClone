@@ -7,10 +7,12 @@ import infra.Audio;
 import infra.GoldenAxeGame;
 import infra.Offscreen;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static fxgl.EntityType.GAME_CANVAS;
 import static infra.Settings.*;
 
 /**
@@ -23,8 +25,14 @@ public class GoldenAxeService extends EngineService {
 
     private GoldenAxeGame game = new GoldenAxeGame();
 
+    private WritableImage fxglCanvas;
+
     @Override
     public void onGameReady(PropertyMap vars) {
+        fxglCanvas = FXGL.getGameWorld()
+                .getSingleton(GAME_CANVAS)
+                .getObject("canvas");
+
         game.start();
     }
 
@@ -39,7 +47,8 @@ public class GoldenAxeService extends EngineService {
 
         g.drawImage(offscreen.getImage(), 0, 0, PREFERRED_SCREEN_WIDTH, PREFERRED_SCREEN_HEIGHT, null);
 
-        SwingFXUtils.toFXImage(buffer, FXGL.<GoldenAxeApp>getAppCast().fxglImage);
+        // draw to FXGL canvas
+        SwingFXUtils.toFXImage(buffer, fxglCanvas);
 
         g.dispose();
     }
@@ -48,29 +57,4 @@ public class GoldenAxeService extends EngineService {
     public void onExit() {
         Audio.close();
     }
-
-    //    private class MainLoop implements Runnable {
-//        @Override
-//        public void run() {
-//            long currentTime = System.nanoTime();
-//            long lastTime = currentTime;
-//            long delta;
-//            long unprocessedTime = 0;
-//            while (running) {
-//                currentTime = System.nanoTime();
-//                delta = currentTime - lastTime;
-//                unprocessedTime += delta;
-//                lastTime = currentTime;
-//                goldenAxeGame.update(delta);
-//                while (unprocessedTime >= Settings.TIMER_PER_FRAME) {
-//                    unprocessedTime -= Settings.TIMER_PER_FRAME;
-//                    goldenAxeGame.fixedUpdate();
-//                }
-//
-//                //Graphics2D g = (Graphics2D) bs.getDrawGraphics();
-//
-//                bs.show();
-//            }
-//        }
-//    }
 }

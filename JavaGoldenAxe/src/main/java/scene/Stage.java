@@ -2,7 +2,6 @@ package scene;
 
 import actor.Decoration;
 import actor.Player;
-import static actor.Player.PlayerCharacter.GILIUS;
 import infra.Actor;
 import static infra.Actor.Control.*;
 import infra.Animation;
@@ -11,7 +10,6 @@ import infra.Animator;
 import infra.Audio;
 import infra.Camera;
 import infra.Collider;
-import infra.Go;
 import infra.Offscreen;
 import infra.State;
 import infra.Terrain;
@@ -223,7 +221,6 @@ public class Stage extends State<GoldenAxeGame, SceneManager> {
         }
         Dialog.update();
         updateShadowShearTransition();
-        Go.update();
         EnemiesManager.update();
         for (int layer = 0; layer < MAX_BACKGROUND_LAYERS; layer++) {
             backgrounds[layer].update();
@@ -529,7 +526,6 @@ public class Stage extends State<GoldenAxeGame, SceneManager> {
             }
         }
         else {
-            Go.draw(g);
             Dialog.draw(g);
             drawHud(g);
         }

@@ -32,6 +32,9 @@ import static javax.sound.midi.ShortMessage.CONTROL_CHANGE;
 import static javax.sound.midi.ShortMessage.MIDI_TIME_CODE;
 import javax.sound.midi.Soundbank;
 import javax.sound.midi.Track;
+
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import scene.Stage;
 
 /**
@@ -77,6 +80,10 @@ public class Resource {
         REUSABLE_STAGE_SPRITES.clear();
         REUSABLE_STAGE_FRAMES.clear();
         System.gc();
+    }
+
+    public static Image getImageFX(String name) {
+        return SwingFXUtils.toFXImage(getImage(name), null);
     }
     
     public static BufferedImage getImage(String name) {

@@ -17,8 +17,10 @@ public class Settings {
     public static final int CANVAS_WIDTH = 276;
     public static final int CANVAS_HEIGHT = 207;
 
-    public static final int PREFERRED_SCREEN_WIDTH = (int) (276 * 2.5);
-    public static final int PREFERRED_SCREEN_HEIGHT = (int) (207 * 2.5);
+    public static final double RENDER_UPSCALE_RATIO = 2.5;
+
+    public static final int PREFERRED_SCREEN_WIDTH = (int) (CANVAS_WIDTH * RENDER_UPSCALE_RATIO);
+    public static final int PREFERRED_SCREEN_HEIGHT = (int) (CANVAS_HEIGHT * RENDER_UPSCALE_RATIO);
 
     // --- game loop ---
     
@@ -43,14 +45,14 @@ public class Settings {
     public static final String RES_CHAR_COLLIDER_FILE_EXT = ".char";
     public static final String RES_CHAR_POINTS_FILE_EXT = ".char";
     
-    public static final String RES_INF_PATH = "/res/inf/";
-    public static final String RES_IMAGE_PATH = "/res/image/";
-    public static final String RES_CHARS_PATH = "/res/chars/";
-    public static final String RES_ANIMATOR_PATH = "/res/anim/";
-    public static final String RES_MUSIC_PATH = "/res/audio/";
-    public static final String RES_SOUND_PATH = "/res/audio/";
-    public static final String RES_FONT_PATH = "/res/font/";
-    public static final String RES_STAGE_PATH = "/res/stage/";
+    public static final String RES_INF_PATH = "/assets/inf/";
+    public static final String RES_IMAGE_PATH = "/assets/image/";
+    public static final String RES_CHARS_PATH = "/assets/chars/";
+    public static final String RES_ANIMATOR_PATH = "/assets/anim/";
+    public static final String RES_MUSIC_PATH = "/assets/audio/";
+    public static final String RES_SOUND_PATH = "/assets/audio/";
+    public static final String RES_FONT_PATH = "/assets/font/";
+    public static final String RES_STAGE_PATH = "/assets/stage/";
     
     public static final String RES_DEFAULT_FONT = "golden_axe";
     public static final String RES_SOUND_BANK = "tinypsg";

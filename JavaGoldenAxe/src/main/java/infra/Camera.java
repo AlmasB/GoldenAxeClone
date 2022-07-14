@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import fxgl.UI;
 import scene.Stage;
 
 /**
@@ -370,7 +372,7 @@ public class Camera {
                                                     && !LOCKS.isEmpty()) {
                         
                         currentLock = null;
-                        Go.show(3, 700);
+                        UI.GO.blink(3);
                     }
                     
                     if (!stageCleared && LOCKS.isEmpty()) {
@@ -530,8 +532,8 @@ public class Camera {
             if (sameLocationCounter > 1200 && activeEnemiesCount == 0
                     && currentLock != null 
                         && x < currentLock.x - CANVAS_WIDTH / 2) {
-                
-                Go.show(4, 0);
+
+                UI.GO.blink(4);
                 sameLocationCounter = 0;
             }
         }

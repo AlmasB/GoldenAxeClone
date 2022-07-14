@@ -50,8 +50,7 @@ public class Dialog {
         
         updateInternal(textIndexTmp);
     }
-    
-    
+
     public static void update() {
         if (!visible) {
             return;
@@ -84,7 +83,6 @@ public class Dialog {
                 col++;
             }
         }
-        
     }
     
     public static void draw(Graphics2D g) {
@@ -149,5 +147,4 @@ public class Dialog {
     public static boolean isFinished() {
         return (int) textIndex == text.length() - 1;
     }
-
 }

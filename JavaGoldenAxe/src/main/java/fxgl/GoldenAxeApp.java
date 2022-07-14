@@ -6,15 +6,14 @@ import com.almasb.fxgl.input.KeyTrigger;
 import com.almasb.fxgl.input.Trigger;
 import com.almasb.fxgl.input.TriggerListener;
 import infra.Input;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
+import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
+import javafx.scene.transform.Scale;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.almasb.fxgl.dsl.FXGL.addUINode;
-import static com.almasb.fxgl.dsl.FXGL.getInput;
+import static com.almasb.fxgl.dsl.FXGL.*;
 import static infra.Settings.*;
 
 /**
@@ -22,25 +21,22 @@ import static infra.Settings.*;
  */
 public class GoldenAxeApp extends GameApplication {
 
-    private static final Map<KeyCode, Integer> keyMappings = new HashMap<>();
-
-    private Input gameInput;
-
-    private ImageView fxglCanvas;
-    public WritableImage fxglImage;
+    private Group ui;
 
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setWidth(PREFERRED_SCREEN_WIDTH);
         settings.setHeight(PREFERRED_SCREEN_HEIGHT);
+        settings.setTitle("Java Golden Axe");
         settings.setManualResizeEnabled(true);
-        settings.setScaleAffectedOnResize(false);
 
         settings.addEngineService(GoldenAxeService.class);
     }
 
     @Override
     protected void initInput() {
+        Map<KeyCode, Integer> keyMappings = new HashMap<>();
+
         keyMappings.put(KeyCode.ENTER, KEY_START_2);
         keyMappings.put(KeyCode.SPACE, KEY_START_1);
 
@@ -52,8 +48,6 @@ public class GoldenAxeApp extends GameApplication {
         keyMappings.put(KeyCode.J, KEY_PLAYER_1_ATTACK);
         keyMappings.put(KeyCode.K, KEY_PLAYER_1_JUMP);
         keyMappings.put(KeyCode.L, KEY_PLAYER_1_MAGIC);
-
-        gameInput = new Input();
 
         getInput().addTriggerListener(new TriggerListener() {
             @Override
@@ -84,14 +78,27 @@ public class GoldenAxeApp extends GameApplication {
                 }
             }
         });
+
+        // debug
+
+        onKeyDown(KeyCode.T, () -> UI.GO.blink(4));
     }
 
     @Override
     protected void initGame() {
-        fxglImage = new WritableImage(800, 600);
-        fxglCanvas = new ImageView(fxglImage);
+        getGameWorld().addEntityFactory(new Factory());
 
-        addUINode(fxglCanvas);
+        spawn("gameCanvas");
+    }
+
+    @Override
+    protected void initUI() {
+        ui = new Group(
+                UI.GO
+        );
+        ui.getTransforms().add(new Scale(RENDER_UPSCALE_RATIO, RENDER_UPSCALE_RATIO, 0, 0));
+
+        addUINode(ui);
     }
 
     public static void main(String[] args) {

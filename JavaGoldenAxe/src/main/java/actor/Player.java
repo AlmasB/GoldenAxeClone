@@ -69,12 +69,10 @@ public class Player extends Actor {
     public Enemy rightEnemy;
     
     static {
-        BufferedImage hudLivesDigitsImage 
-                        = Resource.getImage("hud_lives_digits");
+        BufferedImage hudLivesDigitsImage = Resource.getImage("hud_lives_digits");
         
         for (int n = 0; n < 3; n++) {
-            hudLivesDigits[n] 
-                        = hudLivesDigitsImage.getSubimage(n * 8, 0, 8, 15);
+            hudLivesDigits[n] = hudLivesDigitsImage.getSubimage(n * 8, 0, 8, 15);
         }
     }
     
@@ -263,10 +261,8 @@ public class Player extends Actor {
     public void drawHud(Graphics2D g) {
         showingPrivateGameOver = false;
         if (isGameOver()) {
-            if (((control == PLAYER_1 && GoldenAxeGame.player2 != null 
-                && !GoldenAxeGame.player2.isGameOver()) 
-                    || (control == PLAYER_2 && GoldenAxeGame.player1 != null 
-                        && !GoldenAxeGame.player1.isGameOver()))
+            if (((control == PLAYER_1 && GoldenAxeGame.player2 != null && !GoldenAxeGame.player2.isGameOver())
+                    || (control == PLAYER_2 && GoldenAxeGame.player1 != null && !GoldenAxeGame.player1.isGameOver()))
                             && Util.getTime() < gameOverTimeout) {
                 
                 drawPrivateGameOver(g);
@@ -282,8 +278,7 @@ public class Player extends Actor {
     
     private void drawAskContinue(Graphics2D g) {
         int dx = control == PLAYER_1 ? 0 : 17; 
-        String time = 
-                "" + (1 + (int) ((continueTimeout - Util.getTime()) / 1000.0));
+        String time = "" + (1 + (int) ((continueTimeout - Util.getTime()) / 1000.0));
         
         boolean blink = (int) (System.nanoTime() * 0.000000005) % 3 > 0;
         TextRenderer.draw(g, credits + " CREDITS", 4 + dx, 16);
@@ -298,7 +293,6 @@ public class Player extends Actor {
             TextRenderer.draw(g, "YES  NO ", 5 + dx, 19);
             g.drawImage(arrow, (12 + dx) * 8, 19 * 10 + 3, null);
         }
-        
     }
     
     private void drawPrivateGameOver(Graphics2D g) {
@@ -320,6 +314,7 @@ public class Player extends Actor {
             g.drawImage(hudLogo, 144, 187, null);
             g.drawImage(hudLivesDigits[lives - 1], 161, 188, null);
         }
+
         // energy bar
         if (hudEnergyBar != null) {
             if (hudEnergyBarX < 0 && control == PLAYER_1) {
@@ -331,9 +326,9 @@ public class Player extends Actor {
                 hudEnergyBarDirection = RIGHT;
             }
             boolean blink = getTime() < hudEnergyBarBlinkTime;
-            hudEnergyBar.draw(g, hudEnergyBarX, 191, 0, 0, 0
-                        , hudEnergyBarDirection, blink, 1.0, 1.0, 0.0);
+            hudEnergyBar.draw(g, hudEnergyBarX, 191, 0, 0, 0, hudEnergyBarDirection, blink, 1.0, 1.0, 0.0);
         }
+
         // magic
         if (hudMagic != null) {
             if (hudMagicX < 0 && control == PLAYER_1) {
@@ -382,14 +377,12 @@ public class Player extends Actor {
     }
 
     @Override
-    public void onCollision(
-        Collider thisCollider, Collider otherCollider, Actor collidedActor) {
+    public void onCollision(Collider thisCollider, Collider otherCollider, Actor collidedActor) {
 
         // TODO not implemented yet
         // Strength = ((0.5 + 0.5L) * E * A) * M. L
         // ref.: http://www.punchpedia.com/games/arc/goldenaxe/goldenaxe.php
-        score += (int) ((0.5 + 0.5 * GoldenAxeGame.stage) 
-                                                * thisCollider.getScore());
+        score += (int) ((0.5 + 0.5 * GoldenAxeGame.stage) * thisCollider.getScore());
     }
     
     @Override
@@ -402,5 +395,4 @@ public class Player extends Actor {
         super.onDestroy();
         gameOverTimeout = Util.getTime() + 5000;
     }
-    
 }
