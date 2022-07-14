@@ -21,9 +21,7 @@ public class Shadow {
         boolean hasRightVerticalShadow;
         boolean hasDownVerticalShadow;
         
-        public ShadowPixel(int x, int y, boolean hasRightVerticalShadow
-                                            , boolean hasDownVerticalShadow) {
-            
+        public ShadowPixel(int x, int y, boolean hasRightVerticalShadow, boolean hasDownVerticalShadow) {
             point = new Point(x, y);
             this.hasRightVerticalShadow = hasRightVerticalShadow;
             this.hasDownVerticalShadow = hasDownVerticalShadow;

@@ -2,11 +2,10 @@ package fxgl;
 
 import com.almasb.fxgl.core.EngineService;
 import com.almasb.fxgl.core.collection.PropertyMap;
-import com.almasb.fxgl.core.concurrent.Async;
 import com.almasb.fxgl.dsl.FXGL;
+import infra.Audio;
 import infra.GoldenAxeGame;
 import infra.Offscreen;
-import infra.Settings;
 import javafx.embed.swing.SwingFXUtils;
 
 import java.awt.*;
@@ -35,34 +34,22 @@ public class GoldenAxeService extends EngineService {
         game.fixedUpdate();
 
         Graphics2D g = (Graphics2D) buffer.getGraphics();
-        //g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
 
         game.draw(offscreen.getG2d());
 
         g.drawImage(offscreen.getImage(), 0, 0, PREFERRED_SCREEN_WIDTH, PREFERRED_SCREEN_HEIGHT, null);
 
-//        if (keepAspectRatio) {
-//            g.clearRect(0, 0, getWidth(), getHeight());
-//            g.drawImage(offscreen.getImage()
-//                    , sizeWithAspectRatio.x, sizeWithAspectRatio.y
-//                    , sizeWithAspectRatio.width, sizeWithAspectRatio.height
-//                    , null);
-//        }
-//        else {
-//            g.drawImage(offscreen.getImage(), 0, 0, getWidth(), getHeight(), null);
-//        }
-
-        Async.INSTANCE.startAsyncFX(() -> {
-            SwingFXUtils.toFXImage(buffer, FXGL.<GoldenAxeApp>getAppCast().fxglImage);
-        }).await();
+        SwingFXUtils.toFXImage(buffer, FXGL.<GoldenAxeApp>getAppCast().fxglImage);
 
         g.dispose();
     }
 
-//    private class MainLoop implements Runnable {
-//
-//
-//
+    @Override
+    public void onExit() {
+        Audio.close();
+    }
+
+    //    private class MainLoop implements Runnable {
 //        @Override
 //        public void run() {
 //            long currentTime = System.nanoTime();

@@ -229,6 +229,16 @@ public class Audio {
             }
         }
     }
+
+    public static void close() {
+        try {
+            synth.close();
+            sequencer.close();
+            musicSynth.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     public static void main(String[] args) {
         Audio.start();

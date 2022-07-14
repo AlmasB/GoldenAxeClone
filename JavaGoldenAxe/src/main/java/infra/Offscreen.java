@@ -46,17 +46,6 @@ public class Offscreen {
     public void clear() {
         g2d.clearRect(0, 0, width, height);
     }
-    
-    public int getPixel(int x, int y) {
-        if (x < 0 || y < 0 || x > width - 1 || y > height - 1) {
-            return 0;
-        }
-        return data[x + y * width];
-    }
-    
-    public void setPixel(int x, int y, int c) {
-        setPixel(x, y, c, 255);
-    }
 
     // alpha=0~255
     public void setPixel(int x, int y, int c, int alpha) {
@@ -65,5 +54,4 @@ public class Offscreen {
         }
         data[x + y * width] = (alpha << 24) + (c & 0xffffff);
     }
-    
 }

@@ -19,11 +19,6 @@ public class Settings {
 
     public static final int PREFERRED_SCREEN_WIDTH = (int) (276 * 2.5);
     public static final int PREFERRED_SCREEN_HEIGHT = (int) (207 * 2.5);
-    
-    public static final double ASPECT_RATIO 
-                = PREFERRED_SCREEN_WIDTH / (double) PREFERRED_SCREEN_HEIGHT;
-    
-    public static boolean keepAspectRatio = true;
 
     // --- game loop ---
     
