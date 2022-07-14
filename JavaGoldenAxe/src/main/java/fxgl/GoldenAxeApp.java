@@ -6,22 +6,19 @@ import com.almasb.fxgl.core.EngineService;
 import com.almasb.fxgl.input.KeyTrigger;
 import com.almasb.fxgl.input.Trigger;
 import com.almasb.fxgl.input.TriggerListener;
-import infra.*;
+import infra.GameCanvas;
+import infra.Input;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
 import javax.swing.*;
-
-import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static infra.Settings.*;
-import static infra.Settings.PREFERRED_SCREEN_HEIGHT;
-import static infra.Settings.PREFERRED_SCREEN_WIDTH;
 
 /**
  * @author Almas Baimagambetov (almaslvl@gmail.com)
@@ -32,9 +29,6 @@ public class GoldenAxeApp extends GameApplication {
 
     private Input gameInput;
 
-    private static Display display;
-
-    private GameCanvas gameCanvas;
     private ImageView fxglCanvas;
     public WritableImage fxglImage;
 
@@ -45,7 +39,7 @@ public class GoldenAxeApp extends GameApplication {
         settings.setManualResizeEnabled(true);
         settings.setScaleAffectedOnResize(false);
 
-        settings.addEngineService(StopEngineService.class);
+        settings.addEngineService(GoldenAxeService.class);
     }
 
     public static class StopEngineService extends EngineService {
@@ -106,21 +100,31 @@ public class GoldenAxeApp extends GameApplication {
     @Override
     protected void initGame() {
         SwingUtilities.invokeLater(() -> {
-            gameCanvas = new GameCanvas(new GoldenAxeGame());
-
             runOnce(() -> {
                 fxglImage = new WritableImage(800, 600);
                 fxglCanvas = new ImageView(fxglImage);
 
                 addUINode(fxglCanvas);
             }, Duration.seconds(1));
-
-            display = new Display(gameCanvas);
-            display.setTitle("Golden Axe");
-            display.setIconImage(Resource.getImage("icon"));
-            display.start();
         });
     }
+
+//    public static class Display extends JFrame {
+//
+//        private final GameCanvas gameCanvas;
+//
+//        public Display(GameCanvas gameCanvas) {
+//            gameCanvas.setBackground(Color.BLACK);
+//            this.gameCanvas = gameCanvas;
+//        }
+//
+//        public void start() {
+//            getContentPane().add(gameCanvas);
+//            pack();
+//            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            //gameCanvas.start();
+//        }
+//    }
 
     public static void main(String[] args) {
         launch(args);
