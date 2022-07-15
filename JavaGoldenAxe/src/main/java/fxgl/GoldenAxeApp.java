@@ -35,6 +35,7 @@ public class GoldenAxeApp extends GameApplication {
 
     @Override
     protected void initInput() {
+        Map<KeyCode, Double> keyTimes = new HashMap<>();
         Map<KeyCode, Integer> keyMappings = new HashMap<>();
 
         keyMappings.put(KeyCode.ENTER, KEY_START_2);
@@ -63,6 +64,21 @@ public class GoldenAxeApp extends GameApplication {
                     if (keyMappings.containsKey(key)) {
                         Input.KEYS_PRESSED.add(keyMappings.get(key));
                     }
+
+                    var now = getGameTimer().getNow();
+
+                    if (keyTimes.containsKey(key)) {
+                        var lastTime = keyTimes.get(key);
+
+                        // 250 ms
+                        if (now - lastTime <= 0.25) {
+                            if (keyMappings.containsKey(key)) {
+                                Input.KEYS_DOUBLE_PRESSED_SET.add(keyMappings.get(key));
+                            }
+                        }
+                    }
+
+                    keyTimes.put(key, now);
                 }
             }
 

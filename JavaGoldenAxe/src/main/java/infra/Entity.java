@@ -14,7 +14,6 @@ public class Entity {
     protected String id;
     protected boolean started;
     protected boolean destroyed;
-    protected boolean visible = true;
     
     public Entity(Stage stage, String id) {
         this.stage = stage;
@@ -48,14 +47,6 @@ public class Entity {
     
     public void onDestroy() {
     }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
     
     // invoked only once, even if the same entity is added 
     // and removed multiple times in the stage scene
@@ -65,11 +56,9 @@ public class Entity {
     public void fixedUpdate() {
     }
     
-    public void drawShadow(Offscreen offscreen
-            , int cameraX, int cameraY, double shear) {
+    public void drawShadow(Offscreen offscreen, int cameraX, int cameraY, double shear) {
     }
     
     public void draw(Graphics2D g, int cameraX, int cameraY) {
     }
-    
 }
