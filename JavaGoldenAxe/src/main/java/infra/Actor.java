@@ -727,9 +727,7 @@ public class Actor extends Entity implements Comparable<Actor> {
         if (Input.isKeyJustPressed(KEY_PLAYER_1_ATTACK)) {
             fireControlEnabled = true;
         } 
-        if (Input.isKeyJustPressed(KEY_PLAYER_1_JUMP) 
-                && (int) wy == Terrain.getHeight(wx, wz)) {
-
+        if (Input.isKeyJustPressed(KEY_PLAYER_1_JUMP) && (int) wy == Terrain.getHeight(wx, wz)) {
             jumpControlEnabled = true;
         }
     }    
@@ -767,9 +765,7 @@ public class Actor extends Entity implements Comparable<Actor> {
         if (Input.isKeyJustPressed(KEY_PLAYER_2_ATTACK)) {
             fireControlEnabled = true;
         } 
-        if (Input.isKeyJustPressed(KEY_PLAYER_2_JUMP) 
-                && (int) wy == Terrain.getHeight((int) wx, (int) wz)) {
-
+        if (Input.isKeyJustPressed(KEY_PLAYER_2_JUMP) && (int) wy == Terrain.getHeight(wx, wz)) {
             jumpControlEnabled = true;
         }
     }
@@ -1470,10 +1466,7 @@ public class Actor extends Entity implements Comparable<Actor> {
                 animationPlayer.setAnimation("idle", false);
             }            
             updateMovement();
-
-                    
         }
-
     }
 
     protected class Running extends ActorState {
@@ -1541,7 +1534,6 @@ public class Actor extends Entity implements Comparable<Actor> {
                 animationPlayer.update();
             }
         }
-
     }
     
     protected class Jumping extends ActorState {
@@ -2813,34 +2805,29 @@ public class Actor extends Entity implements Comparable<Actor> {
         public void fixedUpdate() {
             if (control == PLAYER_1) {
                 Dialog.update();
-                boolean keyJustPressed = Input.isKeyJustPressed(KEY_START_1) 
-                        || Input.isKeyJustPressed(KEY_START_2) 
-                            || Input.isKeyJustPressed(KEY_PLAYER_1_ATTACK);
+                boolean keyJustPressed = Input.isKeyJustPressed(KEY_START_1)
+                        || Input.isKeyJustPressed(KEY_START_2)
+                        || Input.isKeyJustPressed(KEY_PLAYER_1_ATTACK);
 
                 if (!Dialog.isFinished() && keyJustPressed) {
                     Dialog.showAll();
-                }
-                else if (Dialog.isFinished() 
-                        && textIndex < 2 && keyJustPressed) {
+
+                } else if (Dialog.isFinished() && textIndex < 2 && keyJustPressed) {
                     
                     textIndex++;
-                    String text = Resource.getText(
-                                        "start_dialog_text_" + textIndex);
+                    String text = Resource.getText("start_dialog_text_" + textIndex);
 
-                    Dialog.show(
-                        10, 7, 18, 4, text, true, DEFAULT_FONT_COLOR, null);
-                }
-                else if (Dialog.isFinished() && keyJustPressed) {
+                    Dialog.show(10, 7, 18, 4, text, true, DEFAULT_FONT_COLOR, null);
+
+                } else if (Dialog.isFinished() && keyJustPressed) {
                     Dialog.hide();
                     stateManager.switchTo("walking");
                     finished = true;
                 }
-            }
-            else if (control == PLAYER_2 && finished) {
+            } else if (control == PLAYER_2 && finished) {
                 stateManager.switchTo("walking");
             }
         }
-        
     }
 
     protected class PlayingAnimator extends ActorState {

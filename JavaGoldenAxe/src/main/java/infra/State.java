@@ -58,11 +58,11 @@ public abstract class State<T, S> {
         // implement your code here
     }
     
-    public void draw(Graphics2D g, double wx, double wy, double wz
-            , int cameraX, int cameraY, Direction direction, boolean blink
-                , double scaleX, double scaleY, double angle) {
-        
+    public void draw(Graphics2D g,
+                     double wx, double wy, double wz,
+                     int cameraX, int cameraY,
+                     Direction direction, boolean blink,
+                     double scaleX, double scaleY, double angle) {
         // implement your code here
     }
-
 }

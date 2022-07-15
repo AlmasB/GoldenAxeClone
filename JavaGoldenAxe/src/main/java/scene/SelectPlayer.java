@@ -51,11 +51,8 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
             if (burn[currentPlayerIndex]) {
                 burnFrame[currentPlayerIndex] += 0.25;
                 Animation animation = animationPlayer.getAnimation("burning");
-                if (burnFrame[currentPlayerIndex] 
-                                >= animation.getFramesCount() - 0.01) {
-                    
-                    burnFrame[currentPlayerIndex] = 
-                            animation.getFramesCount() - 0.01;
+                if (burnFrame[currentPlayerIndex] >= animation.getFramesCount() - 0.01) {
+                    burnFrame[currentPlayerIndex] = animation.getFramesCount() - 0.01;
                 }
             }            
         }
@@ -67,24 +64,20 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
             scale = 0.6 + 0.4 * ((z + 16) / 32.0);
         }
 
-        void draw(Graphics2D g, int currentPlayerIndex
-                                , double offsetX, double offsetZ) {
+        void draw(Graphics2D g, int currentPlayerIndex, double offsetX, double offsetZ) {
             
             double scaleTmp = scale;
             if (burn[currentPlayerIndex]) {
                 scaleTmp += 0.1;
                 animationPlayer.setAnimation("burning", false);
-                animationPlayer.setCurrentAnimationFrameIndex(
-                                            burnFrame[currentPlayerIndex]);
-            }
-            else {
+                animationPlayer.setCurrentAnimationFrameIndex(burnFrame[currentPlayerIndex]);
+            } else {
                 animationPlayer.setAnimation(id, false);
             }
             
             Composite originalComposite = g.getComposite();
             g.setComposite(Transparency.getComposite((int) (255 * scale)));
-            animationPlayer.draw(g, x + offsetX, 0.0, z + offsetZ
-                            , 0, 0, RIGHT, false, scaleTmp, scaleTmp, 0.0);
+            animationPlayer.draw(g, x + offsetX, 0.0, z + offsetZ, 0, 0, RIGHT, false, scaleTmp, scaleTmp, 0.0);
             
             g.setComposite(originalComposite);
         }
@@ -104,7 +97,6 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
         public int compareTo(Avatar o) {
             return (int) Math.signum(z - o.z);
         }
-
     }
     
     private Background background;
@@ -134,11 +126,9 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
     @Override
     public void onEnter() {
         reset();
-        background = new Background("select_player_background"
-                                    , 0.25, 0.0, 0.0, 0.0, 1.0, 1.0, true);
-        
-        backgroundSkeleton = new Background("select_player_skeleton"
-                                    , 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, false);
+
+        background = new Background("select_player_background", 0.25, 0.0, 0.0, 0.0, 1.0, 1.0, true);
+        backgroundSkeleton = new Background("select_player_skeleton", 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, false);
         
         animationPlayer = Resource.getAnimationPlayer("select_player", null);
         avatarsById = new Avatar[3];
@@ -166,19 +156,16 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
         }
         
         if (GoldenAxeGame.characterPlayer1 == null) {
-            Avatar selectedAvatar = updateSelection(
-                0, KEY_PLAYER_1_LEFT, KEY_PLAYER_1_RIGHT, KEY_PLAYER_1_ATTACK);
+            Avatar selectedAvatar = updateSelection(0, KEY_PLAYER_1_LEFT, KEY_PLAYER_1_RIGHT, KEY_PLAYER_1_ATTACK);
             
             if (selectedAvatar != null && !selectedAvatar.selected) {
                 GoldenAxeGame.characterPlayer1 = selectedAvatar.playerCharacter;
                 selectedAvatar.select(0);
             }
         }
-        if (GoldenAxeGame.characterPlayer2 == null 
-                && GoldenAxeGame.numberOfPlayers > 1) {
-            
-            Avatar selectedAvatar = updateSelection(
-                1, KEY_PLAYER_2_LEFT, KEY_PLAYER_2_RIGHT, KEY_PLAYER_2_ATTACK);
+
+        if (GoldenAxeGame.characterPlayer2 == null && GoldenAxeGame.numberOfPlayers > 1) {
+            Avatar selectedAvatar = updateSelection(1, KEY_PLAYER_2_LEFT, KEY_PLAYER_2_RIGHT, KEY_PLAYER_2_ATTACK);
 
             if (selectedAvatar != null && !selectedAvatar.selected) {
                 GoldenAxeGame.characterPlayer2 = selectedAvatar.playerCharacter;
@@ -196,20 +183,16 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
         if (startGameTime < 0 
                 && ((GoldenAxeGame.numberOfPlayers == 1 
                     && GoldenAxeGame.characterPlayer1 != null)
-                        || (GoldenAxeGame.numberOfPlayers > 1 
-                            && GoldenAxeGame.characterPlayer1 != null 
-                                && GoldenAxeGame.characterPlayer2 != null))) {
+                        || (GoldenAxeGame.numberOfPlayers > 1 && GoldenAxeGame.characterPlayer1 != null && GoldenAxeGame.characterPlayer2 != null))) {
             
             startGameTime = Util.getTime() + 1000;
-        }
-        else if (startGameTime > 0 && Util.getTime() >= startGameTime) {
+
+        } else if (startGameTime > 0 && Util.getTime() >= startGameTime) {
             manager.switchTo("stage");
         }
     }
     
-    private Avatar updateSelection(
-            int playerIndex, int leftKey, int rightKey, int fireKey) {
-        
+    private Avatar updateSelection(int playerIndex, int leftKey, int rightKey, int fireKey) {
         if (angles[playerIndex] % 120 == 0 ) {
             Avatar selectedAvatar = avatarsById[angles[playerIndex] / 120];
             if (dxs[playerIndex] != 0 && !selectedAvatar.selected) {
@@ -238,6 +221,7 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
         if (angles[playerIndex] < 0) {
             angles[playerIndex] += 360;
         }
+
         return null;
     }
     
@@ -245,6 +229,7 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
     public void draw(Graphics2D g) {
         background.draw(g, 0.0, 0.0);
         backgroundSkeleton.draw(g, 0.0, 0.0);
+
         int maxPlayers = GoldenAxeGame.numberOfPlayers;
         for (int playerIndex = 0; playerIndex < maxPlayers; playerIndex++) {
             for (Avatar avatar : avatars) {
@@ -259,11 +244,9 @@ public class SelectPlayer extends State<GoldenAxeGame, SceneManager> {
                 if (!selectedAvatar.selected) {
                     String avatarName = selectedAvatar.playerCharacter.name();
                     int fixCenter = avatarName.length() / 2;
-                    TextRenderer.draw(g, avatarName
-                            , 9 + 17 * playerIndex - fixCenter, 8);
+                    TextRenderer.draw(g, avatarName, 9 + 17 * playerIndex - fixCenter, 8);
                 }
             }
         }
     }
-    
 }

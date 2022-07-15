@@ -73,12 +73,9 @@ public class Dialog {
                     continue;
                 }
                 if (colorShadow == null) {
-                    TextRenderer.draw(
-                            OFFSCREEN.getG2d(), "" + c, col, row, color);
-                }
-                else {
-                    TextRenderer.draw(OFFSCREEN.getG2d()
-                            , "" + c, col, row, color, colorShadow);
+                    TextRenderer.draw(OFFSCREEN.getG2d(), "" + c, col, row, color);
+                } else {
+                    TextRenderer.draw(OFFSCREEN.getG2d(), "" + c, col, row, color, colorShadow);
                 }
                 col++;
             }
@@ -126,14 +123,6 @@ public class Dialog {
         Dialog.color = color;
         Dialog.colorShadow = colorShadow;
         visible = true;
-    }
-
-    public static int getLastTextIndex() {
-        return lastTextIndex;
-    }
-
-    public static boolean isVisible() {
-        return visible;
     }
     
     public static void hide() {

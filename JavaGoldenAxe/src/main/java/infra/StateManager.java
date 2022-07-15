@@ -18,19 +18,12 @@ public class StateManager<T, S> {
     protected State<T, S> currentState;
     protected State<T, S> nextState;
 
-    public StateManager() {
-    }
-
     public State<T, S> getCurrentState() {
         return currentState;
     }
     
     public void addState(State state) {
         states.put(state.getName(), state);
-    }
-    
-    public void removeState(String stateName) {
-        states.remove(stateName);
     }
 
     public State getState(String stateId) {
@@ -77,14 +70,14 @@ public class StateManager<T, S> {
         }
     }
 
-    public void draw(Graphics2D g, double wx, double wy, double wz
-            , int cameraX, int cameraY, Direction direction, boolean blink
-                , double scaleX, double scaleY, double angle) {
+    public void draw(Graphics2D g,
+                     double wx, double wy, double wz,
+                     int cameraX, int cameraY,
+                     Direction direction, boolean blink,
+                     double scaleX, double scaleY, double angle) {
         
         if (currentState != null) {
-            currentState.draw(g, wx, wy, wz, cameraX, cameraY
-                            , direction, blink, scaleX, scaleY, angle);
+            currentState.draw(g, wx, wy, wz, cameraX, cameraY, direction, blink, scaleX, scaleY, angle);
         }
     }
-
 }

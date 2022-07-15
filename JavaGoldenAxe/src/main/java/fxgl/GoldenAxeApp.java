@@ -29,6 +29,7 @@ public class GoldenAxeApp extends GameApplication {
         settings.setHeight(PREFERRED_SCREEN_HEIGHT);
         settings.setTitle("Java Golden Axe");
         settings.setManualResizeEnabled(true);
+        settings.setMenuKey(KeyCode.P);
 
         settings.addEngineService(GoldenAxeService.class);
     }
@@ -38,6 +39,7 @@ public class GoldenAxeApp extends GameApplication {
         Map<KeyCode, Double> keyTimes = new HashMap<>();
         Map<KeyCode, Integer> keyMappings = new HashMap<>();
 
+        keyMappings.put(KeyCode.ESCAPE, KEY_CANCEL);
         keyMappings.put(KeyCode.ENTER, KEY_START_2);
         keyMappings.put(KeyCode.SPACE, KEY_START_1);
 
@@ -53,7 +55,6 @@ public class GoldenAxeApp extends GameApplication {
         getInput().addTriggerListener(new TriggerListener() {
             @Override
             protected void onAction(Trigger trigger) {
-
             }
 
             @Override

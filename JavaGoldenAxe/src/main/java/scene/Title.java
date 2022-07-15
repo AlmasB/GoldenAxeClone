@@ -1,5 +1,6 @@
 package scene;
 
+import com.almasb.fxgl.dsl.FXGL;
 import infra.Animator;
 import infra.Animator.AnimatorEvent;
 import infra.AnimatorEventListener;
@@ -26,8 +27,7 @@ import java.util.Map;
  * 
  * @author Leonardo Ono (ono.leo80@gmail.com);
  */
-public class Title extends State<GoldenAxeGame, SceneManager> 
-                                        implements AnimatorEventListener {
+public class Title extends State<GoldenAxeGame, SceneManager> implements AnimatorEventListener {
     
     private Offscreen collisionMask;
     private Offscreen shadowLayer;
@@ -77,11 +77,9 @@ public class Title extends State<GoldenAxeGame, SceneManager>
         animatorGameStartOptions = animators.get("title_game_start_options");
         animator.setListener(this);
         animatorGameStartOptions.setListener(this);
-        Background backgroundNormal = new Background("title_background"
-                                        , 0.0, -4.0, 0.0, 0.0, 1.0, 1.0, true);
 
-        Background backgroundDarker = new Background("title_background_darker"
-                                        , 0.0, -4.0, 0.0, 0.0, 1.0, 1.0, true);
+        Background backgroundNormal = new Background("title_background", 0.0, -4.0, 0.0, 0.0, 1.0, 1.0, true);
+        Background backgroundDarker = new Background("title_background_darker", 0.0, -4.0, 0.0, 0.0, 1.0, 1.0, true);
 
         backgrounds = new BackgroundTransition();
         backgrounds.addBackground("normal", backgroundNormal);
@@ -117,20 +115,17 @@ public class Title extends State<GoldenAxeGame, SceneManager>
             if (selectedGameStartOptionIndex > 2) {
                 selectedGameStartOptionIndex = 0;
             }
-        }
-        else if (Input.isKeyJustPressed(KEY_PLAYER_1_UP)) {
+        } else if (Input.isKeyJustPressed(KEY_PLAYER_1_UP)) {
             selectedGameStartOptionIndex--;
             if (selectedGameStartOptionIndex < 0) {
                 selectedGameStartOptionIndex = 2;
             }
-        }
-        else if (Input.isKeyJustPressed(KEY_START_1) 
-                        || Input.isKeyJustPressed(KEY_START_2)) {
+        } else if (Input.isKeyJustPressed(KEY_START_1) || Input.isKeyJustPressed(KEY_START_2)) {
             
             switch (selectedGameStartOptionIndex) {
                 case 0 -> goToSelectPlayerScene(1);
                 case 1 -> goToSelectPlayerScene(2);
-                case 2 -> System.exit(0);
+                case 2 -> FXGL.getGameController().exit();
             }
         }
     }
@@ -144,9 +139,10 @@ public class Title extends State<GoldenAxeGame, SceneManager>
     @Override
     public void fixedUpdate() {
         backgrounds.update();
-        if (gameStartable && !animatorGameStartOptions.isPlaying()
+        if (gameStartable
+                && !animatorGameStartOptions.isPlaying()
                 && Input.isKeyJustPressed(KEY_START_1) 
-                    && !manager.isTransiting()) {
+                && !manager.isTransiting()) {
 
             animator.pause();
             animatorGameStartOptions.play();
@@ -165,22 +161,21 @@ public class Title extends State<GoldenAxeGame, SceneManager>
         }
         
         if (animatorGameStartOptions.isPlaying()) {
-            animatorGameStartOptions.drawShadow(
-                    animator.getActors(), shadowLayer, 0, 0, 1.0);
+            animatorGameStartOptions.drawShadow(animator.getActors(), shadowLayer, 0, 0, 1.0);
             
-            animatorGameStartOptions.draw(
-                    animator.getActors(), g, shadowLayer, 0, 0);
-        }
-        else if (gameStartable) {
+            animatorGameStartOptions.draw(animator.getActors(), g, shadowLayer, 0, 0);
+        } else if (gameStartable) {
             long blinkTimeDif = System.nanoTime() - gameStartableBlinkStartTime;
             boolean blink = (int) (blinkTimeDif * 0.000000005) % 3 < 2;
             if (blink) {
                 TextRenderer.draw(g, "PRESS SPACE TO START", 7, 16);
             }
         }
+
         if (gameStartOptionVisible) {
             drawGameStartOptionsMenu(g);
         }
+
         animatorCredits.draw(g, shadowLayer, 0.0, 0.0);
     }
     
@@ -216,5 +211,4 @@ public class Title extends State<GoldenAxeGame, SceneManager>
             }
         }
     }
-    
 }
